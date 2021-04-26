@@ -14,18 +14,22 @@ public class ConnectedUser {
   private final Email email;
 
   // TODO 이름 프로퍼티 추가
+  private final String name;
 
   private final LocalDateTime grantedAt;
 
-  public ConnectedUser(Long seq, Email email, LocalDateTime grantedAt) {
+  public ConnectedUser(Long seq, Email email, String name, LocalDateTime grantedAt) {
     checkArgument(seq != null, "seq must be provided.");
     checkArgument(email != null, "email must be provided.");
     checkArgument(grantedAt != null, "grantedAt must be provided.");
 
     this.seq = seq;
     this.email = email;
+    this.name = name;
     this.grantedAt = grantedAt;
   }
+
+  public String getName() { return name; }
 
   public Long getSeq() {
     return seq;
@@ -44,6 +48,7 @@ public class ConnectedUser {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
       .append("seq", seq)
       .append("email", email)
+      .append("name", name)
       .append("grantedAt", grantedAt)
       .toString();
   }

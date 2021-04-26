@@ -33,6 +33,8 @@ class UserServiceTest {
 
   private String password;
 
+  private String name;
+
   @BeforeAll
   void setUp() {
     email = new Email("test@gmail.com");
@@ -42,10 +44,11 @@ class UserServiceTest {
   @Test
   @Order(1)
   void 사용자를_추가한다() {
-    User user = userService.join(email, password);
+    User user = userService.join(email, password ,name);
     assertThat(user, is(notNullValue()));
     assertThat(user.getSeq(), is(notNullValue()));
     assertThat(user.getEmail(), is(email));
+    assertThat(user.getName(), is(notNullValue()));
     log.info("Inserted user: {}", user);
   }
 
