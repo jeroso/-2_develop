@@ -45,6 +45,7 @@ public final class Jwt {
     }
     builder.withClaim("userKey", claims.userKey);
     // TODO 이름 필드 추가
+    builder.withClaim("name", claims.name);
     builder.withClaim("email", claims.email.getAddress());
     builder.withArrayClaim("roles", claims.roles);
     return builder.sign(algorithm);
@@ -84,6 +85,7 @@ public final class Jwt {
   static public class Claims {
     Long userKey;
     // TODO 이름 프로퍼티 추가
+    String name;
     Email email;
     String[] roles;
     Date iat;
@@ -97,6 +99,9 @@ public final class Jwt {
       if (!userKey.isNull())
         this.userKey = userKey.asLong();
       // TODO 이름 프로퍼티 처리
+      Claim name = decodedJWT.getClaim("name");
+      if (!name.isNull())
+        this.name = name.asString();
       Claim email = decodedJWT.getClaim("email");
       if (!email.isNull())
         this.email = new Email(email.asString());
@@ -107,10 +112,11 @@ public final class Jwt {
       this.exp = decodedJWT.getExpiresAt();
     }
 
-    public static Claims of(long userKey, Email email, String[] roles) {
+    public static Claims of(long userKey, Email email, String name, String[] roles) {
       Claims claims = new Claims();
       claims.userKey = userKey;
       claims.email = email;
+      claims.name = name;
       claims.roles = roles;
       return claims;
     }
@@ -136,6 +142,7 @@ public final class Jwt {
       return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
         .append("userKey", userKey)
         .append("email", email)
+        .append("name", name)
         .append("roles", Arrays.toString(roles))
         .append("iat", iat)
         .append("exp", exp)
