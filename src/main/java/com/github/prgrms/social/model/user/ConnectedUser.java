@@ -21,6 +21,7 @@ public class ConnectedUser {
   public ConnectedUser(Long seq, Email email, String name, LocalDateTime grantedAt) {
     checkArgument(seq != null, "seq must be provided.");
     checkArgument(email != null, "email must be provided.");
+    checkArgument(name != null, "name must be provided.");
     checkArgument(grantedAt != null, "grantedAt must be provided.");
 
     this.seq = seq;
