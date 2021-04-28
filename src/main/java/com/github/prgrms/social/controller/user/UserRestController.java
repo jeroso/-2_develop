@@ -30,12 +30,12 @@ public class UserRestController {
   }
 
   @PostMapping(path = "user/exists")
-  public ApiResult<Boolean> checkEmail() {
+  public ApiResult<Boolean> checkEmail(@RequestBody EmailCheckRequest emailCheckRequest) {
     // TODO 이메일 중복 확인 로직 구현
     // BODY 예시: {
     //	"email": "iyboklee@gmail.com"
     //}
-    return OK(false);
+    return OK(userService.findByEmail(new Email(emailCheckRequest.getEmail())).isPresent());
   }
 
   @PostMapping(path = "user/join")
