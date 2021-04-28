@@ -60,7 +60,7 @@ public class User {
 
   public String newApiToken(Jwt jwt, String[] roles) {
     // TODO jwt 토큰에 이름 프로퍼티 추가
-    Jwt.Claims claims = Jwt.Claims.of(seq, email, roles);
+    Jwt.Claims claims = Jwt.Claims.of(seq, email, name, roles);
     return jwt.newToken(claims);
   }
 

@@ -1,6 +1,8 @@
 package com.github.prgrms.social.configure;
 
+import com.github.prgrms.social.model.commons.Id;
 import com.github.prgrms.social.model.user.Role;
+import com.github.prgrms.social.model.user.User;
 import com.github.prgrms.social.security.*;
 import com.github.prgrms.social.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Configuration
 @EnableWebSecurity
@@ -79,7 +85,15 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
   @Bean
   public ConnectionBasedVoter connectionBasedVoter() {
     // 커스텀 Voter 를 Bean 으로 등록함
-    return new ConnectionBasedVoter();
+    Pattern pattern = Pattern.compile( "^/api/user/(\\d+)/post/.*$");
+    RequestMatcher requestMatcher = new RegexRequestMatcher(pattern.pattern(), null);
+    return new ConnectionBasedVoter(requestMatcher, (String url) -> {
+      Matcher matcher = pattern.matcher(url);
+      matcher.find();
+      Id<User, Long> targetId = Id.of(User.class, Long.parseLong(matcher.group()));
+      return targetId;
+    });
+
   }
 
   @Bean

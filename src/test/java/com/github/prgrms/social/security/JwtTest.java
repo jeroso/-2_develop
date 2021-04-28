@@ -30,7 +30,7 @@ class JwtTest {
 
   @Test
   void JWT_토큰을_생성하고_복호화_할수있다() {
-    Jwt.Claims claims = Jwt.Claims.of(1L, new Email("test@gmail.com"), new String[]{"ROLE_USER"});
+    Jwt.Claims claims = Jwt.Claims.of(1L, new Email("test@gmail.com"), "test", new String[]{"ROLE_USER"});
     String encodedJWT = jwt.newToken(claims);
     log.info("encodedJWT: {}", encodedJWT);
 
@@ -44,7 +44,7 @@ class JwtTest {
   @Test
   void JWT_토큰을_리프레시_할수있다() throws Exception {
     if (jwt.getExpirySeconds() > 0) {
-      Jwt.Claims claims = Jwt.Claims.of(1L, new Email("test@gmail.com"), new String[]{"ROLE_USER"});
+      Jwt.Claims claims = Jwt.Claims.of(1L, new Email("test@gmail.com"), "test", new String[]{"ROLE_USER"});
       String encodedJWT = jwt.newToken(claims);
       log.info("encodedJWT: {}", encodedJWT);
 
