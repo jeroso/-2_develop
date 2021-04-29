@@ -18,13 +18,16 @@ public class JwtAuthentication {
   public final Email email;
 
   // TODO 이름 프로퍼티 추가
+  public final String name;
 
-  JwtAuthentication(Long id, Email email) {
+  JwtAuthentication(Long id, Email email, String name) {
     checkArgument(id != null, "id must be provided.");
     checkArgument(email != null, "email must be provided.");
+    checkArgument(name != null, "name must be provided.");
 
     this.id = Id.of(User.class, id);
     this.email = email;
+    this.name = name;
   }
 
   @Override
@@ -32,6 +35,7 @@ public class JwtAuthentication {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
       .append("id", id)
       .append("email", email)
+      .append("name", name)
       .toString();
   }
 

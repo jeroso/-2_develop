@@ -16,6 +16,7 @@ public class UserDto {
   private Email email;
 
   // TODO 이름 프로퍼티 추가
+  private String name;
 
   private int loginCount;
 
@@ -41,9 +42,13 @@ public class UserDto {
     return email;
   }
 
+  public String getName() { return name; }
+
   public void setEmail(Email email) {
     this.email = email;
   }
+
+  public void setName(String name) { this.name = name; }
 
   public int getLoginCount() {
     return loginCount;
@@ -74,6 +79,7 @@ public class UserDto {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
       .append("seq", seq)
       .append("email", email)
+      .append("name", name)
       .append("loginCount", loginCount)
       .append("lastLoginAt", lastLoginAt)
       .append("createAt", createAt)

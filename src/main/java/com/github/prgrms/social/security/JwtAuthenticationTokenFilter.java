@@ -72,12 +72,13 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
           Long userKey = claims.userKey;
           Email email = claims.email;
           // TODO 이름을 JWT 토큰에서 가져와보자
+          String name = claims.name;
 
           List<GrantedAuthority> authorities = obtainAuthorities(claims);
 
           if (userKey != null && email != null && authorities.size() > 0) {
             JwtAuthenticationToken authentication =
-              new JwtAuthenticationToken(new JwtAuthentication(userKey, email), null, authorities);
+              new JwtAuthenticationToken(new JwtAuthentication(userKey, email, name), null, authorities);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
           }

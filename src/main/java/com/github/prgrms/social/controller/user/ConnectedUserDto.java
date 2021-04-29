@@ -16,6 +16,7 @@ public class ConnectedUserDto {
   private Email email;
 
   // TODO 이름 프로퍼티 추가
+  private String name;
 
   private LocalDateTime grantedAt;
 
@@ -35,6 +36,8 @@ public class ConnectedUserDto {
     return email;
   }
 
+  public String getName() { return name; }
+
   public void setEmail(Email email) {
     this.email = email;
   }
@@ -52,6 +55,7 @@ public class ConnectedUserDto {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
       .append("seq", seq)
       .append("email", email)
+      .append("name", name)
       .append("grantedAt", grantedAt)
       .toString();
   }
